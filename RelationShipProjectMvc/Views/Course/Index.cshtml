@@ -1,6 +1,6 @@
 ﻿<p>Course-Index</p>
 
-@model List<Course>
+
 
 <table>
     <thead>
@@ -11,15 +11,12 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var course in Model)
+        @foreach (var course in ViewBag.CourseStudentList)
         {
             <tr>
                 <td>@course.Id</td>
                 <td>@course.Name</td>
-                @foreach(var x in course.Students)
-                {
-                    <td>@x.Name</td>
-                }
+                
             </tr>
         }
     </tbody>

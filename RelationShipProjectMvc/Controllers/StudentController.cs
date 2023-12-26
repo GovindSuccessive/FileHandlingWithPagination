@@ -22,7 +22,22 @@ namespace RelationShipProjectMvc.Controllers
         {
             
             var course = mvcDbContext.Courses.ToList();
-            return View("Index", course);
+            var student = mvcDbContext.Students.ToList();
+            var studentCourse = student.Join(
+                                              course,
+                                              student => student.CourseRefId,
+                                              course => course.Id,
+                                              (student, course) => new StudentCourse()
+                                              {
+                                                  Id = student.Id,
+                                                  StudentName = student.Name,
+                                                  CourseId = course.Id,
+                                                  CourseName = course.Name,
+                                                  ImagePath = student.ImagePath,
+
+                                              }).ToList();
+                
+            return View("Index", studentCourse);
         }
 
         [HttpGet]

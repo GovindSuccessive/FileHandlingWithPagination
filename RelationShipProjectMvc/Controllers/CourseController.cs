@@ -14,7 +14,19 @@ namespace RelationShipProjectMvc.Controllers
         public IActionResult Index()
         {
             var course = mvcDbContext.Courses.ToList();
-            return View(course);
+            var student = mvcDbContext.Students.ToList();
+            var courseStudent = student.GroupJoin(course,  //inner sequence
+                                 student => student.CourseRefId, //outerKeySelector 
+                                 course => course.Id,     //innerKeySelector
+                                 (student, course) => new // resultSelector 
+                                 {
+                                     StudentName = student.Name,
+                                     CourseId = student.CourseRefId,
+                                     CourseName = course.ToList().First().Name,
+
+                                 }).ToList();
+            ViewBag.CourseStudentList = courseStudent;
+            return View();
         }
 
 
