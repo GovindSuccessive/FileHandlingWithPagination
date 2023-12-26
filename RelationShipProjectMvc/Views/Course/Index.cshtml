@@ -1,0 +1,26 @@
+﻿<p>Course-Index</p>
+
+@model List<Course>
+
+<table>
+    <thead>
+        <tr>
+            <th>Course Id</th>
+            <th>Course Name</th>
+            <th>Student Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.Id</td>
+                <td>@course.Name</td>
+                @foreach(var x in course.Students)
+                {
+                    <td>@x.Name</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

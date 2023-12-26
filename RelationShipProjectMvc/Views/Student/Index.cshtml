@@ -1,0 +1,30 @@
+﻿
+
+<h3>Student-Index</h3>
+
+@model List<StudentCourse>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Student Id</th>
+            <th scope="col">Student Name</th>
+            <th scope="col">Course Id</th>
+            <th scope="col">Course Name</th>
+            <th scope="col">Photo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var student in Model)
+        {
+            <tr scope="row">
+                <td>@student.Id</td>
+                <td>@student.StudentName</td>
+                <td>@student.CourseId</td>
+                <td>@student.CourseName</td>
+                <td><img src="../image/@Html.DisplayFor(modelitem=>student.ImagePath)" style="width:100px;height:100px"/></td>
+            </tr>
+        }
+    </tbody>
+</table>
