@@ -1,7 +1,24 @@
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using RelationShipProjectMvc.DataContext;
 
 var builder = WebApplication.CreateBuilder(args);
+
+/*builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);*/
+/*builder.Services.AddMvc().AddNewtonsoftJson(o =>
+{
+    o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+});*/
+
+
+/*builder.Services.AddMvc().AddJsonOptions(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+});*/
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

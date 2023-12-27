@@ -1,22 +1,29 @@
-﻿@model RelationShipProjectMvc.Models.AddStudent
+﻿
+@model RelationShipProjectMvc.Models.AddStudent
+
+
 <p>@ViewBag.Success</p>
 <form action="AddStudent" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="mb-3">
         <label for="studname" class="form-label">Student Name</label>
-        <input type="text" class="form-control" id="studname" asp-for="Name" asp-action="AddStudent" asp-controller="Student">
+        <input type="text" class="form-control" id="studname" asp-for="Name" asp-action="AddStudent" asp-controller="Student" name="studname" data-val="true" required maxlength="50">
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label for="studcourseid" class="form-label">Course</label>
-        <select asp-for="CourseRefId" class="form-select">
+        <select asp-for="CourseRefId" class="form-select" data-val="true">
             @foreach (var course in ViewBag.CourseList as List<Course>)
             {
                 <option value="@course.Id">@course.Name</option>
             }
         </select>
+        <span asp-validation-for="CourseRefId" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label for="studimage" class="form-label">Student Image</label>
-        <input type="file" class="form-control" id="studimage" asp-for="ImagePath" asp-action="AddStudent" asp-controller="Student">
+        <input type="file" class="form-control" id="studimage" asp-for="ImagePath" asp-action="AddStudent" asp-controller="Student" data-val="true" required >
+        <span asp-validation-for="ImagePath" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

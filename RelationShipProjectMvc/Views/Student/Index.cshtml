@@ -1,6 +1,6 @@
 ﻿<div class="text-center m-4"><h3>Student List</h3></div>
 
-@model List<StudentCourse>
+@model List<Student>
 <html>
    
     <body>
@@ -12,18 +12,18 @@
                     <div class="card bg-black">
                         <img src="../image/@Html.DisplayFor(modelitem => student.ImagePath)" class="card-img-top p-2" style="width:100%; height:200px;" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title text-center mb-2">@student.StudentName</h5>
+                            <h5 class="card-title text-center mb-2">@student.Name</h5>
                             <div class="row">
                                 <div class="col-6">Student ID</div>
                                 <div class="col-6">@student.Id</div>
                             </div>
                             <div class="row">
                                 <div class="col-6">Course ID</div>
-                                <div class="col-6">@student.CourseId</div>
+                                <div class="col-6">@student.CourseRefId</div>
                             </div>
                             <div class="row mb-1">
                                 <div class="col-6">Course Name</div>
-                                <div class="col-6">@student.CourseName</div>
+                                <div class="col-6">@student.Course.Name</div>
                             </div>
                             <a href="#" class="btn btn-primary mt-1">Go somewhere</a>
                         </div>
