@@ -1,0 +1,32 @@
+﻿@model RelationShipProjectMvc.Models.UpdateStudent;
+
+<p>Edit Student</p>
+
+<form  method="post" enctype="multipart/form-data" action="View">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label for="studId" class="form-label">Id</label>
+        <input type="number" class="form-control" id="studId" asp-for="Id"  readonly>
+    </div>
+    <div class="mb-3">
+        <label for="studname" class="form-label">Student Name</label>
+        <input type="text" class="form-control" id="studname" asp-for="Name" asp-action="View" asp-controller="Student" data-val="true" required maxlength="50">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label for="studcourseid" class="form-label">Course</label>
+        <select asp-for="CourseRefId" class="form-select" data-val="true" asp-action="View" asp-controller="Student">
+            @foreach (var course in ViewBag.CourseList)
+            {
+                <option value="@course.Id">@course.Name</option>
+            }
+        </select>
+        <span asp-validation-for="CourseRefId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label for="studimage" class="form-label">Student Image</label>
+        <input type="file" class="form-control" id="studimage" asp-for="ImagePath" asp-action="View" asp-controller="Student" required>
+        <span asp-validation-for="ImagePath" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

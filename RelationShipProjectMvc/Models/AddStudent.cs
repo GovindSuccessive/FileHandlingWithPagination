@@ -11,7 +11,6 @@ namespace RelationShipProjectMvc.Models
         [Required(ErrorMessage ="Image is Required")]
         
         public IFormFile ImagePath { get; set; }
-        public Course Course { get; set; }
 
         [Required(ErrorMessage ="Course is Required")]
         public int CourseRefId { get; set; }

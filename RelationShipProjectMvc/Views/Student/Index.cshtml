@@ -8,11 +8,11 @@
         <div class="row">
             @foreach (var student in Model)
             {
-                <div class="col-md-3 mb-4 text-white ">
+                <div class="col-md-3 mb-4 text-white text-center ">
                     <div class="card bg-black">
                         <img src="../image/@Html.DisplayFor(modelitem => student.ImagePath)" class="card-img-top p-2" style="width:100%; height:200px;" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title text-center mb-2">@student.Name</h5>
+                            <h5 class="card-title text-center mb-3">@student.Name</h5>
                             <div class="row">
                                 <div class="col-6">Student ID</div>
                                 <div class="col-6">@student.Id</div>
@@ -25,7 +25,11 @@
                                 <div class="col-6">Course Name</div>
                                 <div class="col-6">@student.Course.Name</div>
                             </div>
-                            <a href="#" class="btn btn-primary mt-1">Go somewhere</a>
+                            <div class="row d-flex justify-content-between mt-2">
+                                <div class="col-4"><a href="Student/View/@student.Id" class="btn btn-primary mt-1">Update</a></div>
+                                <div class="col-4"><a href="Student/DeleteStudent/@student.Id" class="btn btn-danger mt-1">Delete</a></div>
+                            </div>
+
                         </div>
                     </div>
                 </div>

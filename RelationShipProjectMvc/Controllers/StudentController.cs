@@ -21,24 +21,7 @@ namespace RelationShipProjectMvc.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-
-            /*var course = mvcDbContext.Courses.ToList();
-            var student = mvcDbContext.Students.ToList();
-            var studentCourse = student.Join(
-                                              course,
-                                              student => student.CourseRefId,
-                                              course => course.Id,
-                                              (student, course) => new StudentCourse()
-                                              {
-                                                  Id = student.Id,
-                                                  StudentName = student.Name,
-                                                  CourseId = course.Id,
-                                                  CourseName = course.Name,
-                                                  ImagePath = student.ImagePath,
-
-                                              }).ToList();*/
-            var student = mvcDbContext.Students.Include(x => x.Course).ToList();
-                
+            var student = mvcDbContext.Students.Include(x => x.Course).ToList();   
             return View("Index", student);
         }
 
@@ -50,7 +33,7 @@ namespace RelationShipProjectMvc.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public async Task<IActionResult> AddStudent(AddStudent addStudent)
         {
            if(ModelState.IsValid)
@@ -79,6 +62,66 @@ namespace RelationShipProjectMvc.Controllers
             return RedirectToAction("Index") ;
         }
 
-      
+        [HttpGet]
+        public async  Task<IActionResult> View(int id)
+        {
+            var student = await mvcDbContext.Students.FirstOrDefaultAsync(s => s.Id == id);
+            ViewBag.CourseList = mvcDbContext.Courses.ToList();
+
+            if (student != null)
+            {
+                var updatestudent = new UpdateStudent()
+                {
+                    Id = student.Id,
+                    Name = student.Name,
+                    CourseRefId = student.CourseRefId,
+                   
+                };
+                return await Task.Run(() => View("View",updatestudent));
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> View(UpdateStudent updateStudent)
+        {
+            if (ModelState.IsValid)
+            {
+                string uniqueFileName = "";
+                if (updateStudent.ImagePath != null)
+                {
+                    string uploadFoler = Path.Combine(_webHostEnvironment.WebRootPath, "image");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + updateStudent.ImagePath.FileName;
+                    string filePath = Path.Combine(uploadFoler, uniqueFileName);
+                    updateStudent.ImagePath.CopyTo(new FileStream(filePath, FileMode.Create));
+                }
+
+                var student = await mvcDbContext.Students.FindAsync(updateStudent.Id);
+
+                if (student != null)
+                {
+                    student.Name = updateStudent.Name;
+                    student.ImagePath = uniqueFileName;
+                    student.CourseRefId = updateStudent.CourseRefId;
+                }
+                await mvcDbContext.SaveChangesAsync();
+                ViewBag.Success = "Student Updated Successfully";
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteStudent(int id)
+        {
+            var student = mvcDbContext.Students.FirstOrDefault(x => x.Id == id);    
+            if (student != null)
+            {
+                mvcDbContext.Students.Remove(student);
+                await mvcDbContext.SaveChangesAsync();  
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
